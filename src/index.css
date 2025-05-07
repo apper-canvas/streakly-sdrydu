@@ -1,0 +1,67 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    @apply h-full;
+  }
+  
+  body {
+    @apply h-full bg-surface-50 text-surface-800 dark:bg-surface-900 dark:text-surface-100 font-sans antialiased;
+  }
+
+  #root {
+    @apply h-full;
+  }
+}
+
+@layer components {
+  .btn {
+    @apply px-4 py-2 rounded-xl font-medium transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2;
+  }
+  
+  .btn-primary {
+    @apply bg-primary text-white hover:bg-primary-dark focus:ring-primary;
+  }
+  
+  .btn-secondary {
+    @apply bg-secondary text-white hover:bg-secondary-dark focus:ring-secondary;
+  }
+  
+  .btn-outline {
+    @apply border border-surface-300 hover:bg-surface-100 dark:border-surface-700 dark:hover:bg-surface-800;
+  }
+  
+  .card {
+    @apply bg-white dark:bg-surface-800 rounded-2xl shadow-card p-4 sm:p-6;
+  }
+  
+  .input {
+    @apply w-full px-4 py-2 bg-surface-50 dark:bg-surface-700 rounded-xl border border-surface-200 dark:border-surface-600 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent;
+  }
+}
+
+@layer utilities {
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+  
+  .task-item-swipe {
+    transform: translateX(0);
+    transition: transform 0.3s ease;
+  }
+  
+  .task-item-swipe.swiped-right {
+    transform: translateX(80px);
+  }
+  
+  .task-item-swipe.swiped-left {
+    transform: translateX(-80px);
+  }
+}
