@@ -93,12 +93,22 @@ function Home({ darkMode, toggleDarkMode }) {
   const addTask = (task) => {
     setTasks(prev => [...prev, { 
       ...task, 
-      id: crypto.randomUUID(), 
+      id: generateTaskId(), 
       createdAt: new Date().toISOString(),
       completed: false,
     }]);
     setShowAdd(false);
     toast.success("Task added successfully!");
+  };
+  
+  // Helper function to generate a unique ID
+  const generateTaskId = () => {
+    // Use crypto.randomUUID() if available, otherwise fallback to a simple random ID
+    if (window.crypto && typeof window.crypto.randomUUID === 'function') {
+      return window.crypto.randomUUID();
+    }
+    // Fallback to a simple random ID
+    return Date.now().toString(36) + Math.random().toString(36).substring(2);
   };
 
   return (
