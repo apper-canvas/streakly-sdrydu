@@ -91,7 +91,6 @@ function Home({ darkMode, toggleDarkMode }) {
   };
   
   const addTask = (task) => {
-    setTasks(prev => [...prev, { 
     try {
       const newTaskId = generateTaskId();
       const newTask = { 
@@ -103,26 +102,19 @@ function Home({ darkMode, toggleDarkMode }) {
       
       setTasks(prevTasks => [...prevTasks, newTask]);
       setShowAdd(false);
+      toast.success("Task added successfully!");
     } catch (error) {
       toast.error("Failed to add task. Please try again.");
+      console.error("Error adding task:", error);
     }
   };
   
   // Helper function to generate a unique ID
   const generateTaskId = () => {
     // Use crypto.randomUUID() if available, otherwise fallback to a simple random ID
-    if (window.crypto && typeof window.crypto.randomUUID === 'function') {
-      return window.crypto.randomUUID();
-      try {
-        return window.crypto.randomUUID();
-      } catch (error) {
-        console.error("Error generating UUID with crypto:", error);
-        // Fall through to backup method
-      }
-    // Fallback to a simple random ID
-    return Date.now().toString(36) + Math.random().toString(36).substring(2);
     const timestamp = Date.now().toString(36);
     return 'task_' + timestamp + '_' + Math.random().toString(36).substring(2, 10);
+  };
 
   return (
     <div className="min-h-screen flex flex-col bg-surface-50 dark:bg-surface-900 transition-colors duration-300">
