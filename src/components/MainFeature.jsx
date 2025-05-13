@@ -3,14 +3,23 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { format, parseISO, isToday, addDays, isSameDay } from 'date-fns';
 import { 
   Check, 
+  CheckIcon,
   Trash, 
+  TrashIcon,
   Calendar, 
+  CalendarIcon,
   Clock, 
+  ClockIcon,
   Tag, 
+  TagIcon,
   Flag, 
+  FlagIcon,
   X, 
+  XIcon,
   ChevronLeft, 
+  ChevronLeftIcon,
   ChevronRight } from 'lucide-react';
+  import { ChevronRightIcon } from 'lucide-react';
 import getIcon from '../utils/iconUtils';
 
 function MainFeature({ 
