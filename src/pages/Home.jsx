@@ -119,9 +119,9 @@ function Home({ darkMode, toggleDarkMode }) {
   return (
     <div className="min-h-screen flex flex-col bg-surface-50 dark:bg-surface-900 transition-colors duration-300">
       {/* Header */}
-      <header className="sticky top-0 z-10 bg-white dark:bg-surface-800 shadow-sm">
-        <div className="container mx-auto px-4 py-4 flex items-center justify-between">
-          <div className="flex items-center gap-2">
+      <header className="sticky top-0 z-10 bg-white dark:bg-surface-800 shadow-sm border-b border-surface-200 dark:border-surface-700">
+        <div className="max-w-md mx-auto px-4 py-3 flex items-center justify-between">
+          <div className="flex items-center gap-2 -ml-1">
             <h1 className="text-2xl font-bold tracking-tight">
               {view === 'today' ? 'Today' : 'Calendar'}
             </h1>
@@ -130,21 +130,21 @@ function Home({ darkMode, toggleDarkMode }) {
           <div className="flex items-center gap-3">
             <button 
               onClick={() => setView(view === 'today' ? 'calendar' : 'today')}
-              className="p-2 rounded-full hover:bg-surface-100 dark:hover:bg-surface-700"
+              className="p-2 rounded-full hover:bg-surface-100 dark:hover:bg-surface-700 text-surface-600 dark:text-surface-300"
             >
               {view === 'today' ? 
-                <CalendarIcon className="w-5 h-5" /> : 
-                <ChecklistIcon className="w-5 h-5" />
+                <CalendarIcon className="w-5 h-5 stroke-current" /> : 
+                <ChecklistIcon className="w-5 h-5 stroke-current" />
               }
             </button>
             
             <button 
               onClick={toggleDarkMode}
-              className="p-2 rounded-full hover:bg-surface-100 dark:hover:bg-surface-700"
+              className="p-2 rounded-full hover:bg-surface-100 dark:hover:bg-surface-700 text-surface-600 dark:text-surface-300"
             >
               {darkMode ? 
-                <SunIcon className="w-5 h-5 text-yellow-400" /> : 
-                <MoonIcon className="w-5 h-5 text-surface-700" />
+                <SunIcon className="w-5 h-5 text-amber-400" /> : 
+                <MoonIcon className="w-5 h-5 stroke-current" />
               }
             </button>
           </div>
@@ -152,9 +152,9 @@ function Home({ darkMode, toggleDarkMode }) {
       </header>
       
       {/* Progress Section */}
-      <div className="bg-white dark:bg-surface-800 px-4 py-3 shadow-sm">
-        <div className="container mx-auto">
-          <div className="flex items-center justify-between mb-2">
+      <div className="bg-white dark:bg-surface-800 px-4 py-3 border-b border-surface-200 dark:border-surface-700">
+        <div className="max-w-md mx-auto">
+          <div className="flex items-center justify-between mb-3">
             <div className="text-sm text-surface-500 dark:text-surface-400">
               {tasksProgress}% completed
             </div>
@@ -170,11 +170,11 @@ function Home({ darkMode, toggleDarkMode }) {
             </div>
           </div>
           
-          <div className="w-full bg-surface-200 dark:bg-surface-700 rounded-full h-1.5">
+          <div className="w-full bg-surface-200 dark:bg-surface-700 rounded-full h-1">
             <motion.div 
               className="bg-primary h-1.5 rounded-full"
               initial={{ width: '0%' }}
-              animate={{ width: `${tasksProgress}%` }}
+              animate={{ width: `${tasksProgress || 0}%` }}
               transition={{ duration: 0.5 }}
             />
           </div>
@@ -182,7 +182,7 @@ function Home({ darkMode, toggleDarkMode }) {
       </div>
       
       {/* Main Content */}
-      <main className="flex-1 container mx-auto px-4 py-6">
+      <main className="flex-1 max-w-md mx-auto px-4 py-6">
         <MainFeature 
           view={view}
           tasks={tasks}
@@ -199,7 +199,7 @@ function Home({ darkMode, toggleDarkMode }) {
       {/* Floating Action Button */}
       <div className="fixed bottom-6 right-6">
         <motion.button
-          className="w-14 h-14 rounded-full bg-primary text-white shadow-lg flex items-center justify-center"
+          className="w-14 h-14 rounded-full bg-primary hover:bg-primary-dark text-white shadow-lg flex items-center justify-center"
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
           onClick={() => setShowAdd(true)}

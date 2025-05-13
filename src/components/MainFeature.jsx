@@ -210,7 +210,7 @@ function MainFeature({
       {/* Calendar View */}
       {view === 'calendar' && (
         <div className="space-y-4">
-          <div className="flex justify-between items-center">
+          <div className="flex justify-between items-center mb-2">
             <div className="flex gap-2">
               <button 
                 onClick={() => setCalendarView('week')}
@@ -260,7 +260,7 @@ function MainFeature({
                 <span className={`text-lg font-semibold ${
                   day.isToday ? 'text-primary' : 'text-surface-800 dark:text-surface-200'
                 }`}>
-                  {day.dayNumber}
+                  {parseInt(day.dayNumber)}
                 </span>
                 
                 {day.hasTasks && (
@@ -276,12 +276,12 @@ function MainFeature({
             </h3>
             
             {/* Tasks for selected date */}
-            <div className="space-y-2">
+            <div className="space-y-3">
               {tasks.filter(task => task.dueDate === selectedDate).length === 0 ? (
                 <div className="py-6 text-center">
                   <p className="text-surface-500 dark:text-surface-400">No tasks for this day</p>
                 </div>
-              ) : (
+              ) : tasks && tasks.length > 0 && (
                 tasks
                   .filter(task => task.dueDate === selectedDate)
                   .map(task => (
@@ -325,7 +325,7 @@ function MainFeature({
               </motion.div>
             ) : (
               <motion.div 
-                className="space-y-2"
+                className="space-y-3"
                 layout
               >
                 {tasks
@@ -485,24 +485,24 @@ function TaskItem({
       className="relative"
       style={{
         background: getSwipeBackground(task.id)
-      }}
+      }} 
     >
       <motion.div
-        className={`flex items-center bg-white dark:bg-surface-800 p-3 sm:p-4 rounded-xl border border-surface-200 dark:border-surface-700 ${
+        className={`flex items-center bg-white dark:bg-surface-800 p-4 rounded-xl shadow-sm ${
           task.completed ? 'opacity-60' : ''
         }`}
         style={{
           ...getSwipeStyle(task.id),
           position: 'relative',
-          zIndex: 1
+          zIndex: 1,
         }}
         onTouchStart={(e) => handleTouchStart(e, task.id)}
         onTouchMove={(e) => handleTouchMove(e, task.id)}
         onTouchEnd={() => handleTouchEnd(task.id)}
       >
         <button
-          onClick={() => onComplete(task.id)}
-          className={`w-6 h-6 sm:w-7 sm:h-7 rounded-full border-2 flex items-center justify-center mr-3 sm:mr-4 ${
+          onClick={(e) => {e.stopPropagation(); onComplete(task.id);}}
+          className={`w-6 h-6 flex-shrink-0 rounded-full border-2 flex items-center justify-center mr-4 transition-colors duration-200 ${
             task.completed 
               ? 'bg-primary border-primary text-white' 
               : 'border-surface-300 dark:border-surface-600'
@@ -510,33 +510,40 @@ function TaskItem({
         >
           {task.completed && <CheckIcon className="w-4 h-4" />}
         </button>
-        
+
         <div className="flex-1 min-w-0">
-          <div className="flex items-center">
-            <p className={`text-base sm:text-lg font-medium ${
-              task.completed ? 'line-through text-surface-400 dark:text-surface-500' : ''
+          <div className="flex items-start justify-between">
+            <p className={`text-base font-medium truncate mr-2 ${
+              task.completed ? 'line-through text-surface-400 dark:text-surface-500' : 'text-surface-800 dark:text-surface-200'
             }`}>
               {task.title}
             </p>
-          </div>
-          
-          <div className="flex items-center mt-1 space-x-2 text-sm text-surface-500 dark:text-surface-400">
-            {task.dueTime && (
-              <span className="flex items-center gap-1">
-                <ClockIcon className="w-3 h-3" />
-                {task.dueTime}
-              </span>
-            )}
-            
-            {task.category && (
-              <span className={`px-2 py-0.5 rounded-full text-xs ${categoryColors[task.category]}`}>
-                {task.category}
-              </span>
-            )}
             
             {task.priority && (
-              <span className={`w-2 h-2 rounded-full ${priorityColors[task.priority]}`}></span>
+              <div className={`flex-shrink-0 w-2.5 h-2.5 rounded-full ${priorityColors[task.priority]}`}></div>
             )}
+          </div>
+          
+          <div className="flex items-center mt-1.5 space-x-2 text-xs text-surface-500 dark:text-surface-400">
+            <div className="flex items-center gap-2">
+              {task.dueTime && (
+                <span className="flex items-center gap-1">
+                  <ClockIcon className="w-3 h-3" />
+                  <span>{task.dueTime}</span>
+                </span>
+              )}
+              
+              {task.category && (
+                <span 
+                  className={`px-1.5 py-0.5 rounded-full text-[10px] uppercase tracking-wide font-medium ${
+                    categoryColors[task.category]
+                  }`}
+                >
+                  {task.category}
+                </span>
+              )}
+            </div>
+
           </div>
         </div>
       </motion.div>
