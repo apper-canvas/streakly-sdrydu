@@ -1,6 +1,16 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { format, parseISO, isToday, addDays, isSameDay } from 'date-fns';
+import { 
+  Check, 
+  Trash, 
+  Calendar, 
+  Clock, 
+  Tag, 
+  Flag, 
+  X, 
+  ChevronLeft, 
+  ChevronRight } from 'lucide-react';
 import getIcon from '../utils/iconUtils';
 
 function MainFeature({ 
